@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth anchor scrolling and sane defaults for portfolio */
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; background-color: #f9fafb; color: #111827; }
+html.dark body { background-color: #000; color: #e5e7eb; }
+
+/* Logo font utility (font loaded via index.html) */
+.font-logo { font-family: 'Great Vibes', cursive; }
+
+/* Slide-in animation for rotating hero titles */
+@keyframes slide-in-up {
+	from { transform: translateY(100%); opacity: 0; }
+	to { transform: translateY(0); opacity: 1; }
+}
+.animate-slide-in { animation: slide-in-up .6s ease; }
+
+@keyframes caret-blink {
+	0%, 45% { opacity: 1; }
+	50%, 95% { opacity: 0; }
+	100% { opacity: 1; }
+}
+.typing-caret {
+	width: 1ch;
+	color: #2563eb; /* Tailwind blue-600 */
+	animation: caret-blink 1s linear infinite;
+}
+html.dark .typing-caret { color: #60a5fa; /* blue-400 */ }
+
+/* Global aesthetic system additions */
+body {
+	@apply font-sans antialiased;
+	background-image: radial-gradient(circle at 50% 20%, rgba(59,130,246,0.08), transparent 60%);
+}
+html.dark body {
+	background-image: radial-gradient(circle at 50% 20%, rgba(59,130,246,0.18), transparent 65%);
+}
+
+@layer components {
+	/* Section container utility */
+	.section { @apply max-w-5xl mx-auto px-4 py-16; }
+	/* Card base */
+	/* 'group' cannot be @applied; add it directly in markup */
+	.card { @apply relative rounded-lg border border-gray-200 dark:border-gray-700 p-5 bg-white dark:bg-neutral-900 overflow-hidden transition-shadow duration-300 hover:shadow-lg hover:border-blue-400/50 dark:hover:border-blue-400/40; }
+	/* Gradient glow using pseudo element */
+	.gradient-glow::before { content:""; @apply absolute -inset-[2px] rounded-lg bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-pink-500/30 blur-md opacity-0 transition-opacity duration-300 pointer-events-none; }
+	.gradient-glow:hover::before { @apply opacity-100; }
+	/* Unified focus ring */
+	.focus-ring { @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-neutral-900; }
+	/* Heading tracking & weight normalization */
+	.heading { @apply font-bold tracking-tight; }
+}
